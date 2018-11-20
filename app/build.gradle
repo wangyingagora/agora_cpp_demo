@@ -1,0 +1,59 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "27.0.3"
+
+    defaultConfig {
+        applicationId "io.agora.tutorials1v1vcall"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_STL=gnustl_static",
+                        "-DANDROID_PLATFORM=android-19",
+                        "-DCMAKE_BUILD_TYPE=Debug",
+                        "-DANDROID_TOOLCHAIN=gcc",
+                        "-DCMAKE_CXX_FLAGS=-std=c++11 -fno-rtti -fno-exceptions",
+                        "-DANDROID_STL_FORCE_FEATURES=OFF",
+                        "-DFEATURE_ENABLE_PRIVATE_LIBS_ONLY=OFF",
+                        "-D__ANDROID_API__=19",
+                        "-DANDROID_ARM_NEON=TRUE"
+            }
+        }
+        ndk {
+            abiFilters "armeabi-v7a" // DO NOT MODIFY THIS LINE, IT'S UPDATED BY BUILD MACHINE AUTOMATICALLY.
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            // path "CMakeLists.txt"
+            path "../../media_sdk3/proj.cmake/CMakeLists.txt"
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:25.3.1'
+
+    api project(':proj.android')
+}

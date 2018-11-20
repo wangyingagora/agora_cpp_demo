@@ -1,0 +1,4 @@
+include ':app'
+
+include ':proj.android'
+project(':proj.android').projectDir = new File(settingsDir, '../media_sdk3/proj.android')
